@@ -29,7 +29,7 @@ class Hexagon(sprite.Sprite):
         #Size is the distance to the corner
         self.Size = Size
         
-        SpriteNames = [os.getcwd + "/Recourses/images/Grass"]
+        SpriteNames = [os.getcwd() + "\Recourses\images\Grass.png"]
         
         self.SpriteSet = [image.load(x) for x in SpriteNames]
         
@@ -202,10 +202,10 @@ class Hexagon(sprite.Sprite):
     Returns a list of Tuples, where each tuple is a corner coordinate
     """
     
-    def hexagon_to_Pixel(self, hexagon):
+    def hexagon_to_Pixel(self):
         
-        x = self.Size * (     3/2 * hexagon.q                               )
-        y = self.Size * (math.sqrt(3)/2 * hex.q  +  math.sqrt(3) * hexagon.r)
+        x = self.Size * (     3/2 * self.q                               )
+        y = self.Size * (math.sqrt(3)/2 * self.q  +  math.sqrt(3) * self.r)
         
         cornerList = []
         
@@ -214,8 +214,8 @@ class Hexagon(sprite.Sprite):
             angle_deg = 60 * i - 30
             angle_rad = round(math.pi / 180 * angle_deg, 2)
             
-            cornerList.append(round(x + (self.Size * math.cos(angle_rad)), 2), 
-                              round(y + (self.Size * math.sin(angle_rad)), 2))
+            cornerList.append((round(x + (self.Size * math.cos(angle_rad)), 2), 
+                              round(y + (self.Size * math.sin(angle_rad)), 2)))
         
         return cornerList
         

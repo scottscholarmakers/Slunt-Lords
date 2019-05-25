@@ -19,8 +19,16 @@ class Board:
         self.HexSize = 0
         self.gameBoard = []
         
+        
+    """
+    returns board for drawing
+    and hexSize
+    """
     def getBoard(self):
         return self.gameBoard
+    
+    def getHexSize(self):
+        return self.HexSize
     
     def generateBoard(self):
         
@@ -49,14 +57,14 @@ class Board:
         
         self.Map = []
         
-        with open(self.Directory + "/Maps" + MapName, 'r') as File:
+        with open(self.Directory + "\\Maps" + "\\" + MapName, 'r') as File:
             
             csv_reader = csv.reader(File, delimiter=',')
             
             for index, row in enumerate(csv_reader):
                 
                 if index == 0:
-                    self.HexSize = int(row)
+                    self.HexSize = int(row[0])
                 
                 else:
                     self.Map.append((int(row[0]), int(row[1]), row[2]))
@@ -64,7 +72,7 @@ class Board:
         
     def saveMap(self, Map, MapName):
         
-        with open(self.Directory + "/Maps" + MapName, 'w') as File:
+        with open(self.Directory + "\\Maps" + MapName, 'w') as File:
             csv_writer = csv.writer(File, delimiter=',')
             
             for index, row in enumerate(Map):
