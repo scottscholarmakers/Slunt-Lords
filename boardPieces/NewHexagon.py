@@ -215,7 +215,7 @@ class Hexagon(sprite.Sprite):
             angle_rad = round(math.pi / 180 * angle_deg, 2)
             
             cornerList.append((round(x + (self.Size * math.cos(angle_rad)), 2), 
-                              round(y + (self.Size * math.sin(angle_rad)), 2)))
+                               round(y + (self.Size * math.sin(angle_rad)), 2)))
         
         return cornerList
         
