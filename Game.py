@@ -6,6 +6,7 @@ Created on Sat May 25 11:24:38 2019
 """
 
 import pygame
+
 from Board import Board
 from boardPieces.Hexagon import Hexagon
 
@@ -44,7 +45,8 @@ class Game:
         
         self.gameDisplay.fill(self.white)
         for Tile in self.GameBoard.getBoard():
-            pygame.draw.polygon(self.gameDisplay, self.black, Tile.hexagon_to_Pixel(), 3)
+            pygame.draw.polygon(self.gameDisplay, self.black, Tile.hexagon_to_Pixel((self.displayWidth/4, self.displayHeight/4)), 3)
+            print(Tile.hexagon_to_Pixel((self.displayWidth/2, self.displayHeight/2)))
                 
         while not self.crashed:
             for event in pygame.event.get():

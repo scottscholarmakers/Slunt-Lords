@@ -202,7 +202,7 @@ class Hexagon(sprite.Sprite):
     Returns a list of Tuples, where each tuple is a corner coordinate
     """
     
-    def hexagon_to_Pixel(self):
+    def hexagon_to_Pixel(self, origin):
         
         x = self.Size * (     3/2 * self.q                               )
         y = self.Size * (math.sqrt(3)/2 * self.q  +  math.sqrt(3) * self.r)
@@ -214,8 +214,8 @@ class Hexagon(sprite.Sprite):
             angle_deg = 60 * i 
             angle_rad = round(math.pi / 180 * angle_deg, 2)
             
-            cornerList.append((round(x + (self.Size * math.cos(angle_rad)), 2), 
-                               round(y + (self.Size * math.sin(angle_rad)), 2)))
+            cornerList.append((round(x + (self.Size * math.cos(angle_rad)) + origin[0], 2), 
+                               round(y + (self.Size * math.sin(angle_rad) + origin[1]), 2)))
                 
         return cornerList
         
