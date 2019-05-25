@@ -9,6 +9,7 @@ New Hexagon for optimized generation and storage
 from pygame import sprite
 from pygame import image
 import math
+import os
 
 """
 New hexagon class emphasises seperate hexagon coordinates, as apposed to 
@@ -19,9 +20,8 @@ class Hexagon(sprite.Sprite):
     
     """
     When defining hexagons q, r, s are the cube coordinates of the hexagon
-    Sprite Set is the Set of the names of the sprites to use (Names with Path)
     """
-    def __init__(self, q, r, s, Size, SpriteSet):
+    def __init__(self, q, r, s, Size):
         super(Hexagon, self).__init__()
         
         self.q, self.r, self.s = q, r, s
@@ -29,7 +29,9 @@ class Hexagon(sprite.Sprite):
         #Size is the distance to the corner
         self.Size = Size
         
-        self.SpriteSet = [image.load(x) for x in SpriteSet]
+        SpriteNames = [os.getcwd + "/Recourses/images/Grass"]
+        
+        self.SpriteSet = [image.load(x) for x in SpriteNames]
         
         self.index = 0
         self.Sprite = self.SpriteSet[self.index]
@@ -56,6 +58,19 @@ class Hexagon(sprite.Sprite):
         
         else:
             return False
+        
+        
+    """
+    This function to generate cube coordinates from axial coordinates
+    used in map generation 
+    
+    s = -q-r
+    
+    returns a tuble of coordinates
+    """
+    def axialToCube(q, r):
+        return(q, r, -q-r)
+        
         
     """
     This set of functions represents the math that might need to be done with hex coordinates
@@ -217,4 +232,50 @@ class Hexagon(sprite.Sprite):
             self.index = 0
         
         self.Sprite = self.SpriteSet[self.index]
+        
+        
+class Chasm(Hexagon):
+    
+    def __init__(self, q, r, s, Size):
+        super().__init__(q, r, s, Size)
+        
+        SpriteNames = [os.getcwd + "/Recourses/images/Grass"]
+        
+        self.SpriteSet = [image.load(x) for x in SpriteNames]
+        
+class Forest(Hexagon):
+    
+    def __init__(self, q, r, s, Size):
+        super().__init__(q, r, s, Size)
+        
+        SpriteNames = [os.getcwd + "/Recourses/images/Grass"]
+        
+        self.SpriteSet = [image.load(x) for x in SpriteNames]
+        
+class Hill(Hexagon):
+    
+    def __init__(self, q, r, s, Size):
+        super().__init__(q, r, s, Size)
+        
+        SpriteNames = [os.getcwd + "/Recourses/images/Grass"]
+        
+        self.SpriteSet = [image.load(x) for x in SpriteNames]
+        
+class Valley(Hexagon):
+    
+    def __init__(self, q, r, s, Size):
+        super().__init__(q, r, s, Size)
+        
+        SpriteNames = [os.getcwd + "/Recourses/images/Grass"]
+        
+        self.SpriteSet = [image.load(x) for x in SpriteNames]
+        
+class Water(Hexagon):
+    
+    def __init__(self, q, r, s, Size):
+        super().__init__(q, r, s, Size)
+        
+        SpriteNames = [os.getcwd + "/Recourses/images/Grass"]
+        
+        self.SpriteSet = [image.load(x) for x in SpriteNames]
         
