@@ -1,112 +1,85 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sun Apr  7 19:42:50 2019
+Created on Fri May 24 20:09:07 2019
 
-@author: Daniel Bresnahan
+@author: Daniel
 """
+
 import math
 from boardPieces.Hexagon import Hexagon, Valley, Water, Forest, Chasm, Hill
-import random
+import os
+import csv
 
 class Board:
     
-    def __init__(self, rows, width, height, size):
-        self.width = width
-        self.height = height
-        self.rows = rows
-        self.hexSize = size
-        self.gameBoard = self.createBoard(self.hexSize, self.rows)
+    def __init__(self):
         
+        self.Directory = os.getcwd()
+        self.Map = []
+        self.HexSize = 0
+        self.gameBoard = []
+        
+        
+    """
+    returns board for drawing
+    and hexSize
+    """
     def getBoard(self):
         return self.gameBoard
+    
+    def getHexSize(self):
+        return self.HexSize
+    
+    def generateBoard(self):
         
-        
-    def hexCoords(self, center, size, i):
-        angle_deg = 60 * i - 30
-        angle_rad = round(math.pi / 180 * angle_deg, 2)
-        return (round(center[0] + size * math.cos(angle_rad), 2),
-                 round(center[1] + size * math.sin(angle_rad), 2))
-    
-    """
-    Hexline is the module used to generate lines of Hexagons of n length 
-    TODO: Change the system for choosing the tile type to be manual and not Random
-    """
-    
-    def HexLine(self, n, size, Start):
-    
-        HexLine = []
-    
-        for i in range(n):
+        for Tile in self.Map[1:]:
             
-            rand = random.randint(0, 100)
-            
-            if rand < 40:
-                HexLine.append(Hexagon([self.hexCoords(Start, size, c) for c in range(6)], Start, size))
-            
-            elif rand >= 40 and rand < 60:
-                HexLine.append(Chasm([self.hexCoords(Start, size, c) for c in range(6)], Start, size))
-                    
-            elif rand >= 60 and rand < 70:
-                HexLine.append(Water([self.hexCoords(Start, size, c) for c in range(6)], Start, size))
-        
-            elif rand >= 70 and rand < 80:
-                HexLine.append(Valley([self.hexCoords(Start, size, c) for c in range(6)], Start, size))
-            
-            elif rand >= 80 and rand < 90:
-                HexLine.append(Hill([self.hexCoords(Start, size, c) for c in range(6)], Start, size))
-            elif rand >= 90:
-                HexLine.append(Forest([self.hexCoords(Start, size, c) for c in range(6)], Start, size))
+            if Tile[2] == "Valley":
+                self.gameBoard.append(Valley(Tile[0], Tile[1], Hexagon.axialToCube(Tile[0], Tile[1]), self.HexSize))
                 
+            elif Tile[2] == "Water":
+                self.gameBoard.append(Water(Tile[0], Tile[1], Hexagon.axialToCube(Tile[0], Tile[1]), self.HexSize))
                 
-            #HexLine.append(Hexagon([self.hexCoords(Start, size, c) for c in range(6)], Start, size))
-        
-            Start = (Start[0] + size * math.sqrt(3), Start[1])
-        
-#        print("HexLine Method")
-#        print(HexLine)
-#        print("~~~~~~ \n")
-        return(HexLine)
-        
-    def createBoard(self, hexSize, numRows):
-        
-        """
-        TODO: Make this part more efficient 
-        """
-    
-        #Finds the x Coordinate of the left-most hex in middle row
-        startX = (self.width / 2) - ((math.floor(numRows/ 2)) * (hexSize * math.sqrt(3)))
-        #Sets start to the coordinates of left-most hex in middle row
-        Start = (startX, self.height / 2)
-
-        HexBoard = []
-    
-        midPoint = int(math.floor(numRows / 2) + 1)
-        NHex = midPoint
-    
-        #transitions start coordinate to that of the left-most in top row
-        for i in range (midPoint , 1, -1):
-            Start = (Start[0] + (hexSize * math.sqrt(3))/2, Start[1] - (hexSize * 2) * 3/4)
-        
-    
-#        print("numRows \n" + str(numRows) + "\n~~~~~\n")
-        
-        for i in range(1, numRows + 1):
-            
-#            print("Generate Loop\n" + str(i) + "\n~~~\n")
-    
-        
-            if i < midPoint:
-            
-                HexBoard.append(self.HexLine(NHex, hexSize, Start=Start))
-                NHex += 1
-            
-                Start = (Start[0] - (hexSize * math.sqrt(3))/2, Start[1] + (hexSize * 2)* 3/4)
-            
+            elif Tile[2] == "Forest":
+                self.gameBoard.append(Forest(Tile[0], Tile[1], Hexagon.axialToCube(Tile[0], Tile[1]), self.HexSize))
+                
+            elif Tile[2] == "Chasm":
+                self.gameBoard.append(Chasm(Tile[0], Tile[1], Hexagon.axialToCube(Tile[0], Tile[1]), self.HexSize))
+                
+            elif Tile[2] == "Hill":
+                self.gameBoard.append(Hill(Tile[0], Tile[1], Hexagon.axialToCube(Tile[0], Tile[1]), self.HexSize))
+                
             else:
+                self.gameBoard.append(Hexagon(Tile[0], Tile[1], Hexagon.axialToCube(Tile[0], Tile[1]), self.HexSize))
+    
+    
+    def LoadMap(self, MapName):
+        
+        self.Map = []
+        
+        with open(self.Directory + "\\Maps" + "\\" + MapName, 'r') as File:
             
-                HexBoard.append(self.HexLine(NHex, hexSize, Start=Start))
-                NHex -= 1
+            csv_reader = csv.reader(File, delimiter=',')
             
-                Start = (Start[0] + (hexSize * math.sqrt(3))/2, Start[1] + (hexSize * 2) * 3/4)
+            for index, row in enumerate(csv_reader):
+                
+                if index == 0:
+                    self.HexSize = int(row[0])
+                
+                else:
+                    self.Map.append((int(row[0]), int(row[1]), row[2]))
+                
+        
+    def saveMap(self, Map, MapName):
+        
+        with open(self.Directory + "\\Maps" + MapName, 'w') as File:
+            csv_writer = csv.writer(File, delimiter=',')
             
-        return HexBoard
+            for index, row in enumerate(Map):
+                if index == 0:
+                    rowList = row
+                    
+                else:
+                    rowList = [row[0], row[1], row[2]]
+                    
+                csv_writer.writerow(rowList)

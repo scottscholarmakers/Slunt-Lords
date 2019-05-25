@@ -32,7 +32,7 @@ class MainMenu:
             pygame.draw.rect(screen, self.gray, button)
             
             if click[0] == 1 and action != None:
-                startGame = Game(800, 600, 21, 800, 600, 15)
+                startGame = Game(800, 600)
                 startGame.gameLoop()
                 pygame.quit()
         else:
