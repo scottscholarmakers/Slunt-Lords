@@ -29,14 +29,22 @@ class Hexagon(sprite.Sprite):
         #Size is the distance to the corner
         self.Size = Size
         
-        SpriteNames = [os.getcwd() + "\Recourses\images\Grass.png"]
+        SpriteNames = [os.getcwd() + "\\Recourses\\images\\Grass.png"]
         
         self.SpriteSet = [image.load(x) for x in SpriteNames]
         
         self.index = 0
         self.Sprite = self.SpriteSet[self.index]
         
-     
+        self.type = "Blank"
+        
+        self.width = Size * 2
+        self.height = math.sqrt(3) * Size
+        
+    
+    def getType(self):
+        return self.type
+    
     """
     Call this to check cube coordinates of hexagon
     """
@@ -243,6 +251,8 @@ class Chasm(Hexagon):
         
         self.SpriteSet = [image.load(x) for x in SpriteNames]
         
+        self.type = "Chasm"
+        
 class Forest(Hexagon):
     
     def __init__(self, q, r, s, Size):
@@ -251,6 +261,8 @@ class Forest(Hexagon):
         SpriteNames = [os.getcwd + "/Recourses/images/Grass"]
         
         self.SpriteSet = [image.load(x) for x in SpriteNames]
+        
+        self.type = "Forest"
         
 class Hill(Hexagon):
     
@@ -261,6 +273,8 @@ class Hill(Hexagon):
         
         self.SpriteSet = [image.load(x) for x in SpriteNames]
         
+        self.type = "Hill"
+        
 class Valley(Hexagon):
     
     def __init__(self, q, r, s, Size):
@@ -270,6 +284,8 @@ class Valley(Hexagon):
         
         self.SpriteSet = [image.load(x) for x in SpriteNames]
         
+        self.type = "Hill"
+        
 class Water(Hexagon):
     
     def __init__(self, q, r, s, Size):
@@ -278,4 +294,6 @@ class Water(Hexagon):
         SpriteNames = [os.getcwd + "/Recourses/images/Grass"]
         
         self.SpriteSet = [image.load(x) for x in SpriteNames]
+        
+        self.type = "Water"
         

@@ -30,9 +30,35 @@ class Board:
     def getHexSize(self):
         return self.HexSize
     
+    """
+    Function used to create basic parallelogram maps, of differing sizes
+    orientation 1 = Top left
+    orientation 2 = Middle
+    orientation 3 = Top Right
+    
+    returns 
+    """
+    
+    def createParallelograms(self, orientation, start, end, NewSize):
+        
+        ReturnMap = []
+        
+        if orientation == 1:
+            
+            for q in range(start, end):
+                
+                for r in range(start, end):
+                    
+                    ReturnMap.append(Hexagon(q, r, -q-r, NewSize))
+                    
+                    
+        return ReturnMap
+
+        
+    
     def generateBoard(self):
         
-        for Tile in self.Map[1:]:
+        for Tile in self.Map:
             
             if Tile[2] == "Valley":
                 self.gameBoard.append(Valley(Tile[0], Tile[1], Hexagon.axialToCube(Tile[0], Tile[1]), self.HexSize))
@@ -63,23 +89,28 @@ class Board:
             
             for index, row in enumerate(csv_reader):
                 
-                if index == 0:
-                    self.HexSize = int(row[0])
+                print(row)
                 
-                else:
-                    self.Map.append((int(row[0]), int(row[1]), row[2]))
+                if row:
+                
+                    if index == 0:
+                        self.HexSize = int(row[0])
+                    
+                    else:
+                        self.Map.append((int(row[0]), int(row[1]), row[2]))
+                    
                 
         
     def saveMap(self, Map, MapName):
         
-        with open(self.Directory + "\\Maps" + MapName, 'w') as File:
+        with open(self.Directory + "\Maps" + "\\" + MapName + ".txt", 'w') as File:
             csv_writer = csv.writer(File, delimiter=',')
             
             for index, row in enumerate(Map):
                 if index == 0:
-                    rowList = row
+                    rowList = [row.Size]
                     
                 else:
-                    rowList = [row[0], row[1], row[2]]
+                    rowList = [row.q, row.r, row.getType()]
                     
                 csv_writer.writerow(rowList)

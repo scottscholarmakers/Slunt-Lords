@@ -1,4 +1,12 @@
 30
+0, 0, Blank
+1, 0, Blank
+2, 0, Blank
+3, 0, Blank
+0, 1, Blank
 1, 1, Blank
-3, 4, Blank
-4, 4, Blank
+2, 1, Blank
+0, 2, Blank
+1, 2, Blank
+2, 2, Blank
+3, 2, Blank

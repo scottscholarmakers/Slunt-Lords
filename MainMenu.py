@@ -38,7 +38,7 @@ class MainMenu:
         else:
             pygame.draw.rect(screen, self.black, button, 3)
             
-        buttonTextStyle = pygame.font.Font("04B_31__.ttf", 12)
+        buttonTextStyle = pygame.font.Font("SLUNTFONT.TTF", 12)
         buttonTextSurface, buttonTextRect = self.text_objects(msg, buttonTextStyle)
         buttonTextRect.center = (x, (y + (h / 2)))
         screen.blit(buttonTextSurface, buttonTextRect)
@@ -61,7 +61,7 @@ class MainMenu:
                     
             self.screen.fill(self.white)
         
-            self.titleStyle = pygame.font.Font("04B_31__.ttf", 50)
+            self.titleStyle = pygame.font.Font("SLUNTFONT.TTF", 50)
             self.titleTextSurface, self.titleTextRect = self.text_objects("SLUNT LORDS", self.titleStyle)
             self.titleTextRect.center = ((self.display_width / 2), (self.display_height / 4))
             

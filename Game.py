@@ -21,7 +21,7 @@ class Game:
     
     clock = pygame.time.Clock()
     
-    def __init__(self, displayWidth, displayHeight, defaultBoard="Basic-Triangle.txt"):
+    def __init__(self, displayWidth, displayHeight, ThisBoard="TestGram.txt"):
         
         self.displayWidth = displayWidth
         self.displayHeight = displayHeight
@@ -33,9 +33,16 @@ class Game:
         
         self.GameBoard = Board()
         
-        self.GameBoard.LoadMap(defaultBoard)
+        self.GameBoard.LoadMap(ThisBoard)
         
         self.GameBoard.generateBoard()
+        
+        self.BoardMap = self.GameBoard.getBoard()
+        
+        
+        self.origin = ((self.displayWidth/2)- (max([Hex.q for Hex in self.BoardMap])/2) * self.BoardMap[0].width,
+                       (self.displayHeight/2) - (max([Hex.r for Hex in self.BoardMap])/2) * self.BoardMap[0].height 
+                        )
         
         self.HexSize = self.GameBoard.getHexSize()
         
@@ -44,9 +51,8 @@ class Game:
     def gameLoop(self):
         
         self.gameDisplay.fill(self.white)
-        for Tile in self.GameBoard.getBoard():
-            pygame.draw.polygon(self.gameDisplay, self.black, Tile.hexagon_to_Pixel((self.displayWidth/4, self.displayHeight/4)), 3)
-            print(Tile.hexagon_to_Pixel((self.displayWidth/2, self.displayHeight/2)))
+        for Tile in self.BoardMap:
+            pygame.draw.polygon(self.gameDisplay, self.black, Tile.hexagon_to_Pixel(self.origin), 3)
                 
         while not self.crashed:
             for event in pygame.event.get():
@@ -60,7 +66,3 @@ class Game:
         pygame.quit()
 
             
-        
-    
-
-
